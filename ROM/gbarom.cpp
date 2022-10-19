@@ -63,6 +63,22 @@ int GBARom::read32bit(int pos)
     return num;
 }
 
+int GBARom::read32bit_signed(int pos)
+{
+    int num = 0xFF & rom_data.at(pos);
+    num |= ((0xFF & rom_data.at(pos+1)) << 8);
+    num |= ((0xFF &rom_data.at(pos+2)) << 16);
+    num |= ((0xFF &rom_data.at(pos+3)) << 24);
+
+    if ((0xFF &rom_data.at(pos+3) >> 3) > 0)
+    {
+        num ^= 0xFFFFFFFF;
+        num += 1;
+        num = -num;
+    }
+    return num;
+}
+
 QByteArray GBARom::decompress(int offset)
 {
     int length = this->read24bit(offset+1);
@@ -214,6 +230,8 @@ void GBARom::find_banks(int offset)
 
 void GBARom::find_maps()
 {
+    int min = 255;
+    int max = 0;
     for (int i = 0; i < bank_offsets.length(); i++)
     {
         QList<GBAMap*> list;
@@ -223,11 +241,16 @@ void GBARom::find_maps()
                && offset != (i+1 < bank_offsets.length() ? bank_offsets[i+1] : 16777216)
                && this->read_offset(offset) != -1) //break if invalid offset
         {
-            list.append(new GBAMap(this->read_offset(offset), this));
+            GBAMap *map = new GBAMap(this->read_offset(offset), this);
+            list.append(map);
             offset += 4;
+            if (map->name_index < min) min = map->name_index;
+            if (map->name_index > max) max = map->name_index;
         }
         maps.append(list);
     }
+    this->name_index = min;
+    this->num_names = max-min;
 }
 
 void GBARom::register_offset(int offset)

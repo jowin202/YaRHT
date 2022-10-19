@@ -33,6 +33,8 @@ public:
     int connection_offset;
 
     int music_no;
+    int name_index;
+
     int width;
     int height;
 

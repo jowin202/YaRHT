@@ -16,6 +16,7 @@ public:
     int read16bit(int pos);
     int read24bit(int pos);
     int read32bit(int pos);
+    int read32bit_signed(int pos);
     QByteArray decompress(int offset);
     QString readText(int pos, int len);
     int find_start_of_text(int pos);
@@ -32,6 +33,9 @@ public:
     QList< QList<GBAMap*> > maps;
 
     QHash<QPair<int,int>,GBATileset*> tilesets;
+
+    int name_index = 0;
+    int num_names = 0;
 
 
 

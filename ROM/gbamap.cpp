@@ -12,6 +12,7 @@ GBAMap::GBAMap(int offset, GBARom *rom)
     this->connection_offset = rom->read_offset(offset+12);
 
     this->music_no = rom->read16bit(offset+16);
+    this->name_index = rom->read8bit(offset+20);
 
 
     this->width = rom->read32bit(this->footer_offset);
@@ -41,7 +42,7 @@ GBAMap::GBAMap(int offset, GBARom *rom)
     {
         connection conn;
         conn.direction = rom->read8bit(connection_addr);
-        conn.offset = rom->read8bit(connection_addr+4);
+        conn.offset = rom->read32bit_signed(connection_addr+4);
         conn.bank = rom->read8bit(connection_addr+8);
         conn.map = rom->read8bit(connection_addr+9);
 

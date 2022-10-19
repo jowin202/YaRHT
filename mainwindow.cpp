@@ -56,16 +56,18 @@ void MainWindow::on_button_import_clicked()
     this->rom.find_banks(this->ui->spin_map_bank_header_offset->value());
     this->rom.find_maps();
 
+
     QTreeWidgetItem *banks = new QTreeWidgetItem(QStringList("Banks"));
     this->ui->map_tree->addTopLevelItem(banks);
     for (int i = 0; i < this->rom.maps.length(); i++)
     {
         QTreeWidgetItem *bank = new QTreeWidgetItem(QStringList(QString::number(i)));
         for (int j = 0; j < this->rom.maps.at(i).length(); j++)
+        {
             bank->addChild(new QTreeWidgetItem(QStringList(QString::number(j))));
+        }
         banks->addChild(bank);
     }
-
 }
 
 void MainWindow::on_map_tree_itemActivated(QTreeWidgetItem *item, int column)
@@ -107,57 +109,7 @@ void MainWindow::on_map_tree_itemActivated(QTreeWidgetItem *item, int column)
 
 
     //Connections Tab3
-    //TODO Fix it
-    int max_up = 0;
-    int max_down = 0;
-    int max_left = 0;
-    int max_right = 0;
-    for (int i = 0; i < map->connections.length(); i++)
-    {
-        connection conn = map->connections.at(i);
-        if (conn.direction == 1) //down
-        {
-            if (rom.maps.at(conn.bank).at(conn.map)->height > max_down)
-                max_down = rom.maps.at(conn.bank).at(conn.map)->height;
-        }
-        if (conn.direction == 2) //up
-        {
-            if (rom.maps.at(conn.bank).at(conn.map)->height > max_up)
-                max_up = rom.maps.at(conn.bank).at(conn.map)->height;
-        }
-        if (conn.direction == 3) //left
-        {
-            if (rom.maps.at(conn.bank).at(conn.map)->width > max_left)
-                max_left = rom.maps.at(conn.bank).at(conn.map)->width;
-        }
-        if (conn.direction == 4) //right
-        {
-            if (rom.maps.at(conn.bank).at(conn.map)->width > max_right)
-                max_right = rom.maps.at(conn.bank).at(conn.map)->width;
-        }
-    }
-
-    QImage img(16*(map->width + max_left + max_right), 16*(map->height + max_up + max_down), QImage::Format_ARGB32);
-    QPainter painter2(&img);
-    painter2.fillRect(0,0,img.width(),img.height(), QColor(0,0,0));
-
-    for (int i = 0; i < map->connections.length(); i++)
-    {
-        connection conn = map->connections.at(i);
-        qDebug() << conn.direction << conn.bank << conn.map;
-        if (conn.direction == 1) //down
-            painter2.drawImage(16*(max_left + conn.offset),16*(max_up+map->height), rom.maps.at(conn.bank).at(conn.map)->map_image);
-        else if (conn.direction == 2) //up
-            painter2.drawImage(16*(max_left + conn.offset),16*(max_up-rom.maps.at(conn.bank).at(conn.map)->height), rom.maps.at(conn.bank).at(conn.map)->map_image);
-        else if (conn.direction == 3) //left
-            painter2.drawImage(16*(max_left-rom.maps.at(conn.bank).at(conn.map)->width), 16*(max_up + conn.offset), rom.maps.at(conn.bank).at(conn.map)->map_image);
-        else if (conn.direction == 4) //right
-            painter2.drawImage(16*(max_left+map->width), 16*(max_up + conn.offset), rom.maps.at(conn.bank).at(conn.map)->map_image);
-    }
-
-    painter2.drawImage(16*max_left, 16*max_up, map->map_image);
-    painter2.end();
-    this->ui->connections_label->setPixmap(QPixmap::fromImage(img));
+    this->ui->connections_label->setMap(bank, m, &rom);
 
 }
 

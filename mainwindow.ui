@@ -24,7 +24,7 @@
        <bool>true</bool>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab_9">
        <property name="acceptDrops">
@@ -206,9 +206,22 @@
               <height>16777215</height>
              </size>
             </property>
+            <attribute name="headerVisible">
+             <bool>false</bool>
+            </attribute>
             <column>
              <property name="text">
               <string notr="true">1</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>bank</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>map</string>
              </property>
             </column>
            </widget>
@@ -232,8 +245,8 @@
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>543</width>
-                  <height>437</height>
+                  <width>96</width>
+                  <height>38</height>
                  </rect>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_6">
@@ -291,8 +304,8 @@
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>543</width>
-                  <height>437</height>
+                  <width>96</width>
+                  <height>38</height>
                  </rect>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_9">
@@ -369,7 +382,7 @@
                   </spacer>
                  </item>
                  <item row="0" column="0">
-                  <widget class="QLabel" name="connections_label">
+                  <widget class="ConnectionLabel" name="connections_label">
                    <property name="text">
                     <string/>
                    </property>
@@ -452,6 +465,11 @@
    <class>HexSpin</class>
    <extends>QSpinBox</extends>
    <header>GUI/hexspin.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ConnectionLabel</class>
+   <extends>QLabel</extends>
+   <header>GUI/connectionlabel.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
