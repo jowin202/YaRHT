@@ -17,6 +17,65 @@ struct connection
     int offset;
 };
 
+
+struct personEvent
+{
+    int no;
+    int pic_no;
+    int unkonwn_param1;
+    int x;
+    int y;
+    int talking_level;
+    int movement_type;
+    int movement;
+    int unkonwn_param2;
+    int trainer;
+    int unkonwn_param3;
+    int view_radius;
+    int script_offset;
+    int person_id;
+    int unkonwn_param4;
+};
+
+struct warpEvent
+{
+    int x;
+    int y;
+    int talking_level;
+    int target_warp_no;
+    int target_map;
+    int target_bank;
+};
+
+struct scriptEvent
+{
+    int x;
+    int y;
+    int talking_level;
+    int unknown1;
+    int var_num;
+    int var_value;
+    int unknown2;
+    int script_offset;
+};
+
+struct signpostEvent
+{
+    int x;
+    int y;
+    int talking_level;
+    int signpost_type;
+    int unknown;
+
+    //signpost type = 0 .. 4
+    int script_offset;
+    //signpost type = 5 ..7
+    int item_id;
+    int hidden_id;
+    int amount;
+
+};
+
 class GBAMap
 {
 public:
@@ -44,8 +103,13 @@ public:
     int tileset1_offset;
     int tileset2_offset;
 
+
     GBATileset *tileset = 0;
     QList<connection> connections;
+    QList<personEvent> person_events;
+    QList<warpEvent> warp_events;
+    QList<scriptEvent> script_events;
+    QList<signpostEvent> signpost_events;
 };
 
 #endif // GBAMAP_H

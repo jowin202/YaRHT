@@ -68,6 +68,49 @@ void MainWindow::on_button_import_clicked()
         }
         banks->addChild(bank);
     }
+
+    /*
+    for (int i = 0; i < rom.maps.at(3).at(3)->person_events.length(); i++)
+    {
+        qDebug() << QString::number(rom.maps.at(3).at(3)->person_events.at(i).script_offset,16);
+    }
+    */
+
+    /*
+    for (int i = 0; i < rom.maps.at(3).at(3)->warp_events.length(); i++)
+    {
+        qDebug() << QString("(%1,%2) to warp: %3, bank: %4, map: %5")
+                    .arg(rom.maps.at(3).at(3)->warp_events.at(i).x,0,16)
+                    .arg(rom.maps.at(3).at(3)->warp_events.at(i).y,0,16)
+                    .arg(rom.maps.at(3).at(3)->warp_events.at(i).target_warp_no,0,16)
+                    .arg(rom.maps.at(3).at(3)->warp_events.at(i).target_bank,0,16)
+                    .arg(rom.maps.at(3).at(3)->warp_events.at(i).target_map,0,16);
+    }
+    */
+    /*
+    for (int i = 0; i < rom.maps.at(3).at(3)->script_events.length(); i++)
+    {
+        qDebug() << QString::number(rom.maps.at(3).at(3)->script_events.at(i).script_offset,16);
+    }
+    */
+
+
+    /*
+    for (int i = 0; i < rom.maps.at(3).at(3)->signpost_events.length(); i++)
+    {
+        if (rom.maps.at(3).at(3)->signpost_events.at(i).signpost_type >= 0 &&
+                rom.maps.at(3).at(3)->signpost_events.at(i).signpost_type <= 4)
+            qDebug() << QString("(%1,%2)").arg(rom.maps.at(3).at(3)->signpost_events.at(i).x,0,16).arg(rom.maps.at(3).at(3)->signpost_events.at(i).y,0,16) +
+                    QString::number(rom.maps.at(3).at(3)->signpost_events.at(i).script_offset,16);
+        else
+            qDebug() << QString("(%1,%2) ").arg(rom.maps.at(3).at(3)->signpost_events.at(i).x,0,16).arg(rom.maps.at(3).at(3)->signpost_events.at(i).y,0,16) +
+                    QString::number(rom.maps.at(3).at(3)->signpost_events.at(i).item_id,16) + " " +
+                        QString::number(rom.maps.at(3).at(3)->signpost_events.at(i).hidden_id,16) + " " +
+                        QString::number(rom.maps.at(3).at(3)->signpost_events.at(i).amount,16);
+    }
+    */
+
+
 }
 
 void MainWindow::on_map_tree_itemActivated(QTreeWidgetItem *item, int column)
