@@ -14,6 +14,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     this->setAcceptDrops(true);
+
+    this->ui->connections_label->set_scroll_area(this->ui->scrollArea_4);
 }
 
 MainWindow::~MainWindow()

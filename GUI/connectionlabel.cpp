@@ -8,8 +8,21 @@ ConnectionLabel::ConnectionLabel(QWidget *parent) : QLabel(parent)
 
 void ConnectionLabel::setMap(int bank, int map_num, GBARom *rom)
 {
+    if (rom->maps.length() <= bank)
+    {
+        qDebug() << "Bank " << bank << " not available";
+        return;
+    }
+    if (rom->maps.at(bank).length() <= map_num)
+    {
+        qDebug() << "Map " << map_num << " in bank " << bank << " not available";
+        return;
+    }
+
+
     this->rom = rom;
     this->maps.clear();
+    this->teleporters.clear();
     GBAMap *map = rom->maps.at(bank).at(map_num);
     int max_up = 0;
     int max_down = 0;
@@ -96,21 +109,73 @@ void ConnectionLabel::setMap(int bank, int map_num, GBARom *rom)
         maps.insert(QPair<int,int>(conn.bank,conn.map), map_rect);
     }
 
+
+
     painter2.drawImage(16*max_left, 16*max_up, map->map_image);
+    painter2.setOpacity(0.5);
+    for (int i = 0; i < map->warp_events.length(); i++)
+    {
+        warpEvent ev = map->warp_events.at(i);
+        QRect warp_field = QRect(16*(ev.x + max_left), 16*(ev.y + max_up), 16, 16);
+        if (i == this->target_warper)
+            painter2.fillRect(warp_field, Qt::blue);
+        else
+            painter2.fillRect(warp_field, Qt::green);
+
+        QVector<int> v;
+        v.append(ev.target_bank);
+        v.append(ev.target_map);
+        v.append(ev.target_warp_no);
+
+        this->teleporters.insert(v, warp_field);
+    }
+
+    this->target_warper = -1;
+
+    //scroll to chosen map
+    if (this->scroll_offset.x() >= 0 && this->scroll_offset.y() >= 0)
+    {
+        this->scroll_area->horizontalScrollBar()->setValue(16*max_left);
+        this->scroll_area->verticalScrollBar()->setValue(16*max_up);
+    }
+    this->scroll_offset = QPoint(-1,-1);
+    painter2.setOpacity(1);
+
     painter2.end();
     this->setPixmap(QPixmap::fromImage(img));
 }
 
 void ConnectionLabel::mousePressEvent(QMouseEvent *ev)
 {
-    QMapIterator<QPair<int,int>, QRect> i(maps);
+    int scroll_x = this->hscroll->value();
+    int scroll_y = this->vscroll->value();
+
+    QMapIterator<QVector<int>, QRect> i(teleporters);
     while (i.hasNext())
     {
         i.next();
         if (i.value().contains(ev->pos()))
         {
-            this->setMap(i.key().first,i.key().second, this->rom);
+            this->target_warper = i.key().at(2);
+            scroll_offset = QPoint(-1,-1); //avoid scrolling when warp
+            this->setMap(i.key().at(0),i.key().at(1), this->rom);
             return;
         }
     }
+
+
+    QMapIterator<QPair<int,int>, QRect> i2(maps);
+    while (i2.hasNext())
+    {
+        i2.next();
+        if (i2.value().contains(ev->pos()))
+        {
+            this->scroll_offset = QPoint(scroll_x,scroll_y) - i2.value().topLeft();
+            qDebug() << this->scroll_offset;
+            this->target_warper = -1; //got there by map and not by warper
+            this->setMap(i2.key().first,i2.key().second, this->rom);
+            return;
+        }
+    }
+
 }
