@@ -80,8 +80,10 @@ class GBAMap
 {
 public:
     GBAMap(int offset, GBARom *rom);
+    GBARom *rom = 0;
 
     void generate_map_image(GBARom *rom);
+    QString get_name();
     QImage map_image;
     QList<int> passages;
 

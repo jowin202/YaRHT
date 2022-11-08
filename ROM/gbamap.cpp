@@ -5,6 +5,7 @@
 GBAMap::GBAMap(int offset, GBARom *rom)
 {
     this->offset = offset;
+    this->rom = rom;
 
     this->footer_offset = rom->read_offset(offset);
     this->event_offset = rom->read_offset(offset+4);
@@ -217,4 +218,14 @@ void GBAMap::generate_map_image(GBARom *rom)
     painter.end();
     this->map_image = img;
 
+}
+
+QString GBAMap::get_name()
+{
+    if (this->rom != 0 && this->rom->place_names.length() >= 0 && this->rom->place_names.length() > this->name_index - this->rom->name_index)
+    {
+        return this->rom->place_names.at(this->name_index - this->rom->name_index);
+    }
+
+    return "";
 }

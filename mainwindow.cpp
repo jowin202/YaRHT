@@ -36,16 +36,8 @@ const QMimeData* mimeData = event->mimeData();
         if (urlList.length() == 1)
         {
             this->ui->line_path->setText(urlList.first().toLocalFile());
-            this->on_button_find_offsets_clicked();
         }
     }
-}
-
-void MainWindow::on_button_find_offsets_clicked()
-{
-    rom.set_path(this->ui->line_path->text());
-    int offset = rom.find_bank_header_offset();
-    this->ui->spin_map_bank_header_offset->setValue(offset);
 }
 
 void MainWindow::on_button_browse_clicked()
@@ -58,6 +50,12 @@ void MainWindow::on_button_import_clicked()
     this->rom.find_banks(this->ui->spin_map_bank_header_offset->value());
     this->rom.find_maps();
 
+    if (this->ui->spin_map_names_offset->value() != 0)
+    {
+        this->rom.find_names(this->ui->spin_map_names_offset->value());
+    }
+
+
 
     QTreeWidgetItem *banks = new QTreeWidgetItem(QStringList("Banks"));
     this->ui->map_tree->addTopLevelItem(banks);
@@ -66,11 +64,16 @@ void MainWindow::on_button_import_clicked()
         QTreeWidgetItem *bank = new QTreeWidgetItem(QStringList(QString::number(i)));
         for (int j = 0; j < this->rom.maps.at(i).length(); j++)
         {
-            bank->addChild(new QTreeWidgetItem(QStringList(QString::number(j))));
+            QString map_name = (this->rom.maps.at(i).at(j)->get_name() != "" ? QString(" ") + this->rom.maps.at(i).at(j)->get_name() : "");
+            QStringList list;
+            list << (QString::number(j) + map_name);
+            list << QString::number(i);
+            list << QString::number(j);
+
+            bank->addChild(new QTreeWidgetItem(list));
         }
         banks->addChild(bank);
     }
-
     /*
     for (int i = 0; i < rom.maps.at(3).at(3)->person_events.length(); i++)
     {
@@ -121,9 +124,10 @@ void MainWindow::on_map_tree_itemActivated(QTreeWidgetItem *item, int column)
     if (item->parent() == 0) return;
     if (item->parent()->parent() == 0) return;
 
-    int m = item->text(0).toInt();
-    int bank = item->parent()->text(0).toInt();
+    int m = item->text(2).toInt();
+    int bank = item->text(1).toInt();
     GBAMap *map = rom.maps.at(bank).at(m);
+
 
     //Tileset
     this->ui->tileset_label->setPixmap(QPixmap::fromImage(map->tileset->tileset_image));
@@ -162,4 +166,22 @@ void MainWindow::on_button_find_map_names_clicked()
 {
     TextBrowserDialog *dialog = new TextBrowserDialog(&this->rom);
     dialog->show();
+}
+
+void MainWindow::on_button_name_FR_LG_clicked()
+{
+    rom.set_path(this->ui->line_path->text());
+    this->ui->spin_map_names_offset->setValue(this->offset_finder.find_name_offset_FR_LG(&rom));
+}
+
+void MainWindow::on_button_find_bank_offsets_clicked()
+{
+    rom.set_path(this->ui->line_path->text());
+    this->ui->spin_map_bank_header_offset->setValue(offset_finder.find_bank_header_offset(&this->rom));
+}
+
+void MainWindow::on_map_tree_itemExpanded(QTreeWidgetItem *item)
+{
+    Q_UNUSED(item);
+    this->ui->map_tree->resizeColumnToContents(0);
 }

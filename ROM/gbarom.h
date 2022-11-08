@@ -19,13 +19,14 @@ public:
     int read32bit_signed(int pos);
     QByteArray decompress(int offset);
     QString readText(int pos, int len);
+    QString readText_until_FF(int pos);
     int find_start_of_text(int pos);
     int find_end_of_text(int pos);
 
     QString path;
     QByteArray rom_data;
 
-    int find_bank_header_offset();
+    //Maps and Banks
     void find_banks(int offset);
     void find_maps();
     QList<int> bank_offsets;
@@ -34,8 +35,16 @@ public:
 
     QHash<QPair<int,int>,GBATileset*> tilesets;
 
+
+    //Map Part Names
+    void find_names(int offset);
+    QStringList place_names;
     int name_index = 0;
     int num_names = 0;
+
+
+
+
 
 
 

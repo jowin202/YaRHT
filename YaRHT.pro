@@ -19,6 +19,7 @@ SOURCES += \
     GUI/connectionlabel.cpp \
     GUI/textbrowserdialog.cpp \
     ROM/gbamap.cpp \
+    ROM/gbaoffsetfinder.cpp \
     ROM/gbarom.cpp \
     GUI/hexspin.cpp \
     ROM/gbatileset.cpp \
@@ -29,6 +30,7 @@ HEADERS += \
     GUI/connectionlabel.h \
     GUI/textbrowserdialog.h \
     ROM/gbamap.h \
+    ROM/gbaoffsetfinder.h \
     ROM/gbarom.h \
     GUI/hexspin.h \
     ROM/gbatileset.h \

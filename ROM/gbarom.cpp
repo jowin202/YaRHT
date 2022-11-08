@@ -167,6 +167,14 @@ QString GBARom::readText(int pos, int len)
     return result;
 }
 
+QString GBARom::readText_until_FF(int pos)
+{
+    int i = 0;
+    while (this->read8bit(pos+i) != 0xFF)
+        i++;
+    return this->readText(pos,i);
+}
+
 int GBARom::find_start_of_text(int pos)
 {
     int c;
@@ -192,24 +200,6 @@ int GBARom::find_end_of_text(int pos)
             || c == 0xB8 || c == 0xAD || c == 0xAE || c == 0xB4 || c == 0xB3);
     qDebug() << "end: " << QString::number(c,16);
     return pos;
-}
-
-int GBARom::find_bank_header_offset()
-{
-    for (int i = 0; i < this->rom_data.length()-4; i++)
-    {
-        if (rom_data.at(i) == 0x08
-                && rom_data.at(i+1) == 0x68
-                && rom_data.at(i+2) == 0x70
-                && rom_data.at(i+3) == 0x47)
-        {
-            if (rom_data.at(i+7) == 0x08)
-            {
-                return read_offset(i+4);
-            }
-        }
-    }
-    return -1;
 }
 
 void GBARom::find_banks(int offset)
@@ -251,6 +241,17 @@ void GBARom::find_maps()
     }
     this->name_index = min;
     this->num_names = max-min;
+}
+
+void GBARom::find_names(int offset)
+{
+    if (num_names <= 0) return;
+    for (int i = 0; i < num_names; i++)
+    {
+        int name_offset = this->read_offset(offset);
+        place_names << this->readText_until_FF(name_offset);
+        offset += 4;
+    }
 }
 
 void GBARom::register_offset(int offset)

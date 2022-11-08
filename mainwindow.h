@@ -8,6 +8,7 @@
 #include <QTreeWidgetItem>
 
 #include "ROM/gbarom.h"
+#include "ROM/gbaoffsetfinder.h"
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -30,7 +31,6 @@ public:
 
 
 private slots:
-    void on_button_find_offsets_clicked();
 
     void on_button_browse_clicked();
 
@@ -40,8 +40,14 @@ private slots:
 
     void on_button_find_map_names_clicked();
 
+    void on_button_name_FR_LG_clicked();
+    void on_button_find_bank_offsets_clicked();
+
+    void on_map_tree_itemExpanded(QTreeWidgetItem *item);
+
 private:
     Ui::MainWindow *ui;
     GBARom rom;
+    GBAOffsetFinder offset_finder;
 };
 #endif // MAINWINDOW_H
