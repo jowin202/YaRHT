@@ -50,9 +50,23 @@ void MainWindow::on_button_import_clicked()
     this->rom.find_banks(this->ui->spin_map_bank_header_offset->value());
     this->rom.find_maps();
 
+    //names
     if (this->ui->spin_map_names_offset->value() != 0)
     {
-        this->rom.find_names(this->ui->spin_map_names_offset->value());
+        this->rom.find_place_names(this->ui->spin_map_names_offset->value());
+    }
+
+    //encounters
+    if (this->ui->spin_encounter_offset->value() != 0)
+    {
+        this->rom.find_encounters(this->ui->spin_encounter_offset->value());
+    }
+
+
+    //pokemon names
+    if (this->ui->spin_pokemon_name_offset->value() != 0)
+    {
+        this->rom.find_pokemon_names(this->ui->spin_pokemon_name_offset->value());
     }
 
 
@@ -160,6 +174,9 @@ void MainWindow::on_map_tree_itemActivated(QTreeWidgetItem *item, int column)
     //Connections Tab3
     this->ui->connections_label->setMap(bank, m, &rom);
 
+    //Encounters Tab
+    this->ui->encounter_widget->display_encounters(bank ,m, &rom);
+
 }
 
 void MainWindow::on_button_find_map_names_clicked()
@@ -184,4 +201,16 @@ void MainWindow::on_map_tree_itemExpanded(QTreeWidgetItem *item)
 {
     Q_UNUSED(item);
     this->ui->map_tree->resizeColumnToContents(0);
+}
+
+void MainWindow::on_button_find_pokemon_name_offset_clicked()
+{
+    rom.set_path(this->ui->line_path->text());
+    this->ui->spin_pokemon_name_offset->setValue(offset_finder.find_pokemon_name_offset(&this->rom));
+}
+
+void MainWindow::on_button_find_encounter_offset_clicked()
+{
+    rom.set_path(this->ui->line_path->text());
+    this->ui->spin_encounter_offset->setValue(offset_finder.find_encounter_offset(&this->rom));
 }

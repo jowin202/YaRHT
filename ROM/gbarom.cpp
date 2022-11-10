@@ -4,6 +4,7 @@
 #include "gbarom.h"
 #include "gbamap.h"
 #include "gbatileset.h"
+#include "gbaencounter.h"
 
 GBARom::GBARom()
 {
@@ -158,6 +159,10 @@ QString GBARom::readText(int pos, int len)
             result += "-";
         else if (c == 0xb3 || c == 0xb4)
             result += "\'";
+        else if (c == 0xB6)
+            result += "♀";
+        else if (c == 0xB5)
+            result += "♂";
         else if (c == 0x00)
             result += " ";
         else if (c == 0xFF)
@@ -167,11 +172,13 @@ QString GBARom::readText(int pos, int len)
     return result;
 }
 
-QString GBARom::readText_until_FF(int pos)
+QString GBARom::readText_until_FF(int pos, int *expected_length)
 {
     int i = 0;
     while (this->read8bit(pos+i) != 0xFF)
         i++;
+
+    *expected_length = i;
     return this->readText(pos,i);
 }
 
@@ -183,8 +190,8 @@ int GBARom::find_start_of_text(int pos)
         c = this->rom_data[pos--] & 0xFF;
     } while((c >= 0xbb && c <= 0xef) || (c >= 0xa1 && c <= 0xaa) ||
             c == 0x00 || c == 0xFF || c == 0xFE || c == 0x1B
-            || c == 0xB8 || c == 0xAD || c == 0xAE || c == 0xB4 || c == 0xB3);
-    qDebug() << "start: " << QString::number(c,16);
+            || c == 0xB8 || c == 0xAD || c == 0xAE || c == 0xB4 || c == 0xB3 || c == 0xB5 || c == 0xB6);
+    //qDebug() << "start: " << QString::number(c,16);
     return pos;
 }
 
@@ -197,8 +204,22 @@ int GBARom::find_end_of_text(int pos)
         c = this->rom_data[pos++]  & 0xFF;
     } while((c >= 0xbb && c <= 0xef) || (c >= 0xa1 && c <= 0xaa) ||
             c == 0x00 || c == 0xFF || c == 0xFE || c == 0x1B
-            || c == 0xB8 || c == 0xAD || c == 0xAE || c == 0xB4 || c == 0xB3);
-    qDebug() << "end: " << QString::number(c,16);
+            || c == 0xB8 || c == 0xAD || c == 0xAE || c == 0xB4 || c == 0xB3 || c == 0xB5 || c == 0xB6);
+    //qDebug() << "end: " << QString::number(c,16);
+    return pos;
+}
+
+int GBARom::find_next_text(int pos)
+{
+
+    int c;
+    do
+    {
+        c = this->rom_data[pos++]  & 0xFF;
+    } while(! ((c >= 0xbb && c <= 0xef) || (c >= 0xa1 && c <= 0xaa) ||
+            c == 0x00 || c == 0xFF || c == 0xFE || c == 0x1B
+            || c == 0xB8 || c == 0xAD || c == 0xAE || c == 0xB4 || c == 0xB3 || c == 0xB5 || c == 0xB6) );
+    //qDebug() << "next: " << QString::number(c,16);
     return pos;
 }
 
@@ -243,15 +264,59 @@ void GBARom::find_maps()
     this->num_names = max-min;
 }
 
-void GBARom::find_names(int offset)
+void GBARom::find_place_names(int offset)
 {
     if (num_names <= 0) return;
     for (int i = 0; i < num_names; i++)
     {
         int name_offset = this->read_offset(offset);
-        place_names << this->readText_until_FF(name_offset);
+        int expected_length;
+        place_names << this->readText_until_FF(name_offset, &expected_length);
         offset += 4;
     }
+}
+
+void GBARom::find_encounters(int offset)
+{
+    int bank, map;
+    do
+    {
+    bank = this->read8bit(offset++);
+    map = this->read8bit(offset++);
+    offset+= 2;
+
+    int encounters_grass = this->read_offset(offset);
+    offset += 4;
+    int encounters_water = this->read_offset(offset);
+    offset += 4;
+    int encounters_rock_smash = this->read_offset(offset);
+    offset += 4;
+    int encounters_fishing_rod = this->read_offset(offset);
+    offset += 4;
+
+    encounters.insert(QPair<int,int>(bank,map), new GBAEncounter(encounters_grass, encounters_water, encounters_rock_smash, encounters_fishing_rod, this));
+    }
+    while (bank != 0xFF && map != 0xFF);
+
+}
+
+void GBARom::find_pokemon_names(int offset)
+{
+    int start_offset = this->find_next_text(offset);
+    while (this->read8bit(start_offset) == 0xFF)
+        start_offset++;
+
+    for (int i = 0; i < 412; i++)
+    {
+        int expected_length;
+        QString name = this->readText_until_FF(start_offset, &expected_length);
+        QString trimmed_name = name.trimmed();
+
+        this->pokemon_names << trimmed_name;
+        qDebug() << (i+1) << trimmed_name ;
+        start_offset += expected_length+1;
+    }
+
 }
 
 void GBARom::register_offset(int offset)

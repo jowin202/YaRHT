@@ -45,6 +45,10 @@ private slots:
 
     void on_map_tree_itemExpanded(QTreeWidgetItem *item);
 
+    void on_button_find_pokemon_name_offset_clicked();
+
+    void on_button_find_encounter_offset_clicked();
+
 private:
     Ui::MainWindow *ui;
     GBARom rom;

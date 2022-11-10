@@ -17,7 +17,9 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     GUI/connectionlabel.cpp \
+    GUI/encounterwidget.cpp \
     GUI/textbrowserdialog.cpp \
+    ROM/gbaencounter.cpp \
     ROM/gbamap.cpp \
     ROM/gbaoffsetfinder.cpp \
     ROM/gbarom.cpp \
@@ -28,7 +30,9 @@ SOURCES += \
 
 HEADERS += \
     GUI/connectionlabel.h \
+    GUI/encounterwidget.h \
     GUI/textbrowserdialog.h \
+    ROM/gbaencounter.h \
     ROM/gbamap.h \
     ROM/gbaoffsetfinder.h \
     ROM/gbarom.h \
@@ -37,6 +41,7 @@ HEADERS += \
     mainwindow.h
 
 FORMS += \
+    GUI/encounterwidget.ui \
     GUI/textbrowserdialog.ui \
     mainwindow.ui
 

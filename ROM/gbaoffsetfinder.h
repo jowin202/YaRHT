@@ -13,6 +13,8 @@ public:
 
     int find_bank_header_offset(GBARom *rom);
     int find_name_offset_FR_LG(GBARom *rom);
+    int find_pokemon_name_offset(GBARom *rom);
+    int find_encounter_offset(GBARom *rom);
 signals:
 
 };

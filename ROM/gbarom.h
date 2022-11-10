@@ -6,6 +6,8 @@
 
 class GBATileset;
 class GBAMap;
+class GBAEncounter;
+
 class GBARom
 {
 public:
@@ -19,9 +21,10 @@ public:
     int read32bit_signed(int pos);
     QByteArray decompress(int offset);
     QString readText(int pos, int len);
-    QString readText_until_FF(int pos);
+    QString readText_until_FF(int pos, int *expected_length);
     int find_start_of_text(int pos);
     int find_end_of_text(int pos);
+    int find_next_text(int pos);
 
     QString path;
     QByteArray rom_data;
@@ -37,11 +40,20 @@ public:
 
 
     //Map Part Names
-    void find_names(int offset);
+    void find_place_names(int offset);
     QStringList place_names;
     int name_index = 0;
     int num_names = 0;
 
+    //Encounters
+    void find_encounters(int offset);
+    QHash< QPair<int,int>, GBAEncounter*> encounters;
+
+
+
+    //Pokemon Data
+    void find_pokemon_names(int offset);
+    QStringList pokemon_names;
 
 
 
