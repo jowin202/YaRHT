@@ -25,6 +25,7 @@ SOURCES += \
     ROM/gbarom.cpp \
     GUI/hexspin.cpp \
     ROM/gbatileset.cpp \
+    ROM/gbatrainer.cpp \
     main.cpp \
     mainwindow.cpp
 
@@ -38,6 +39,7 @@ HEADERS += \
     ROM/gbarom.h \
     GUI/hexspin.h \
     ROM/gbatileset.h \
+    ROM/gbatrainer.h \
     mainwindow.h
 
 FORMS += \

@@ -2,6 +2,7 @@
 #include <QDebug>
 #include <QPair>
 #include "gbarom.h"
+#include "gbatrainer.h"
 #include "gbamap.h"
 #include "gbatileset.h"
 #include "gbaencounter.h"
@@ -313,11 +314,77 @@ void GBARom::find_pokemon_names(int offset)
         QString trimmed_name = name.trimmed();
 
         this->pokemon_names << trimmed_name;
-        qDebug() << (i+1) << trimmed_name ;
+        //qDebug() << (i+1) << trimmed_name ;
         start_offset += expected_length+1;
     }
 
 }
+
+void GBARom::find_trainers(int offset)
+{
+    int start_offset = offset;
+    for (int i = 0; i < 1000; i++)
+    {
+        GBATrainer *trainer = new GBATrainer(this);
+
+        trainer->partyFlags = this->read8bit(start_offset++);
+        trainer->trainerClass = this->read8bit(start_offset++);
+        trainer->encounterMusic = this->read8bit(start_offset++);
+        trainer->trainerPic = this->read8bit(start_offset++);
+
+        if (trainer->partyFlags == 0xAC && trainer->trainerClass == 0xAC && trainer->encounterMusic == 0xAC && trainer->trainerPic == 0xAC)
+            break;
+
+
+        int expected_lenght;
+        trainer->name = this->readText_until_FF(start_offset, &expected_lenght);
+        //start_offset += expected_lenght;
+
+        start_offset += 28; //skip 28 bytes
+        trainer->partySize = this->read32bit(start_offset);
+        start_offset += 4;
+
+        trainer->party_offset = this->read_offset(start_offset);
+        start_offset += 4;
+
+        this->trainers.append(trainer);
+
+        /*
+        qDebug() << i << trainer->partyFlags
+                 << trainer->trainerClass
+                 << trainer->encounterMusic
+                 << trainer->trainerPic
+                 << trainer->name
+                 << trainer->partySize
+                 << QString::number(trainer->party_offset, 16)
+                 << "party: " << trainer->party_as_string()
+                 ;//<< "next: " << QString::number(start_offset, 16);
+                 */
+    }
+
+}
+
+void GBARom::find_move_names(int offset)
+{
+    int start_offset = this->find_next_text(offset);
+    while (this->read8bit(start_offset) == 0x00) //skip AE FF FF FF ...
+        start_offset++;
+    while (this->read8bit(start_offset) != 0x00) //skip 00 00 00 00 00 ...
+        start_offset++;
+
+    for (int i = 0; i < 370; i++)
+    {
+        int expected_length;
+        QString name = this->readText_until_FF(start_offset, &expected_length);
+        QString trimmed_name = name.trimmed();
+
+        this->move_names << trimmed_name;
+        qDebug() << (i+1) << trimmed_name  << QString::number(start_offset,16);
+        start_offset += expected_length+1;
+    }
+}
+
+
 
 void GBARom::register_offset(int offset)
 {

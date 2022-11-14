@@ -49,6 +49,10 @@ private slots:
 
     void on_button_find_encounter_offset_clicked();
 
+    void on_button_trainer_offset_clicked();
+
+    void on_button_move_name_offset_clicked();
+
 private:
     Ui::MainWindow *ui;
     GBARom rom;

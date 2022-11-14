@@ -68,3 +68,13 @@ int GBAOffsetFinder::find_encounter_offset(GBARom *rom)
     }
     return -1;
 }
+
+int GBAOffsetFinder::find_trainer_offset(GBARom *rom)
+{
+    return rom->read_offset(0x116c4);
+}
+
+int GBAOffsetFinder::find_move_name_offset(GBARom *rom)
+{
+    return rom->read_offset(0x148);
+}

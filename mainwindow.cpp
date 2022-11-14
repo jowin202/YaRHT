@@ -62,13 +62,23 @@ void MainWindow::on_button_import_clicked()
         this->rom.find_encounters(this->ui->spin_encounter_offset->value());
     }
 
-
     //pokemon names
     if (this->ui->spin_pokemon_name_offset->value() != 0)
     {
         this->rom.find_pokemon_names(this->ui->spin_pokemon_name_offset->value());
     }
 
+    //move names
+    if (this->ui->spin_move_name_offset->value() != 0)
+    {
+        rom.find_move_names(this->ui->spin_move_name_offset->value());
+    }
+
+    //trainers
+    if (this->ui->spin_trainer_offset->value() != 0)
+    {
+        rom.find_trainers(this->ui->spin_trainer_offset->value());
+    }
 
 
     QTreeWidgetItem *banks = new QTreeWidgetItem(QStringList("Banks"));
@@ -213,4 +223,16 @@ void MainWindow::on_button_find_encounter_offset_clicked()
 {
     rom.set_path(this->ui->line_path->text());
     this->ui->spin_encounter_offset->setValue(offset_finder.find_encounter_offset(&this->rom));
+}
+
+void MainWindow::on_button_trainer_offset_clicked()
+{
+    rom.set_path(this->ui->line_path->text());
+    this->ui->spin_trainer_offset->setValue(offset_finder.find_trainer_offset(&this->rom));
+}
+
+void MainWindow::on_button_move_name_offset_clicked()
+{
+    rom.set_path(this->ui->line_path->text());
+    this->ui->spin_move_name_offset->setValue(offset_finder.find_move_name_offset(&this->rom));
 }

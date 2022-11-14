@@ -7,6 +7,7 @@
 class GBATileset;
 class GBAMap;
 class GBAEncounter;
+class GBATrainer;
 
 class GBARom
 {
@@ -55,6 +56,13 @@ public:
     void find_pokemon_names(int offset);
     QStringList pokemon_names;
 
+    //Trainers
+    void find_trainers(int offset);
+    QList<GBATrainer*> trainers;
+
+    //move names
+    void find_move_names(int offset);
+    QStringList move_names;
 
 
 

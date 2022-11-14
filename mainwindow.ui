@@ -36,10 +36,24 @@
        <layout class="QGridLayout" name="gridLayout_11">
         <item row="0" column="0">
          <layout class="QGridLayout" name="gridLayout_3">
-          <item row="3" column="0">
-           <widget class="QLabel" name="label_5">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_2">
             <property name="text">
-             <string>Encounter Offset:</string>
+             <string>ROM Path:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QPushButton" name="button_find_bank_offsets">
+            <property name="text">
+             <string>Find Bank Offsets</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="2">
+           <widget class="QPushButton" name="button_find_encounter_offset">
+            <property name="text">
+             <string>Find Encounter Offset</string>
             </property>
            </widget>
           </item>
@@ -56,27 +70,10 @@
             </property>
            </spacer>
           </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_3">
-            <property name="text">
-             <string>Map Names Offset:</string>
-            </property>
-           </widget>
+          <item row="4" column="1">
+           <widget class="HexSpin" name="spin_pokemon_name_offset"/>
           </item>
-          <item row="5" column="0">
-           <spacer name="verticalSpacer">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="6" column="0" colspan="6">
+          <item row="8" column="0" colspan="6">
            <layout class="QHBoxLayout" name="horizontalLayout">
             <item>
              <spacer name="horizontalSpacer_2">
@@ -100,10 +97,47 @@
             </item>
            </layout>
           </item>
+          <item row="3" column="1">
+           <widget class="HexSpin" name="spin_encounter_offset"/>
+          </item>
+          <item row="0" column="5">
+           <widget class="QPushButton" name="button_browse">
+            <property name="text">
+             <string>Browse</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QPushButton" name="button_name_FR_LG">
+            <property name="text">
+             <string>Find Name FR/LG</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0">
+           <spacer name="verticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
           <item row="1" column="0">
            <widget class="QLabel" name="label">
             <property name="text">
              <string>Map Bank Header Offset:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_5">
+            <property name="text">
+             <string>Encounter Offset:</string>
             </property>
            </widget>
           </item>
@@ -114,37 +148,10 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="3">
-           <widget class="QPushButton" name="button_find_map_names">
+          <item row="5" column="0">
+           <widget class="QLabel" name="label_6">
             <property name="text">
-             <string>Find Map Names</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="HexSpin" name="spin_map_names_offset"/>
-          </item>
-          <item row="2" column="2">
-           <widget class="QPushButton" name="button_name_FR_LG">
-            <property name="text">
-             <string>Find Name FR/LG</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="1">
-           <widget class="HexSpin" name="spin_pokemon_name_offset"/>
-          </item>
-          <item row="0" column="1" colspan="4">
-           <widget class="QLineEdit" name="line_path">
-            <property name="text">
-             <string>/home/johannes/ROM_Hacks/fireredHugo.gba</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_2">
-            <property name="text">
-             <string>ROM Path:</string>
+             <string>Trainer Offset:</string>
             </property>
            </widget>
           </item>
@@ -155,19 +162,15 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="5">
-           <widget class="QPushButton" name="button_browse">
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_3">
             <property name="text">
-             <string>Browse</string>
+             <string>Map Names Offset:</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="2">
-           <widget class="QPushButton" name="button_find_bank_offsets">
-            <property name="text">
-             <string>Find Bank Offsets</string>
-            </property>
-           </widget>
+          <item row="2" column="1">
+           <widget class="HexSpin" name="spin_map_names_offset"/>
           </item>
           <item row="1" column="1">
            <widget class="HexSpin" name="spin_map_bank_header_offset">
@@ -176,13 +179,44 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="1">
-           <widget class="HexSpin" name="spin_encounter_offset"/>
-          </item>
-          <item row="3" column="2">
-           <widget class="QPushButton" name="button_find_encounter_offset">
+          <item row="2" column="3">
+           <widget class="QPushButton" name="button_find_map_names">
             <property name="text">
-             <string>Find Encounter Offset</string>
+             <string>Find Map Names</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="HexSpin" name="spin_trainer_offset"/>
+          </item>
+          <item row="5" column="2">
+           <widget class="QPushButton" name="button_trainer_offset">
+            <property name="text">
+             <string>Find Trainer Offset FR/LG</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1" colspan="4">
+           <widget class="QLineEdit" name="line_path">
+            <property name="text">
+             <string>/home/johannes/ROM_Hacks/firered.gba</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0">
+           <widget class="QLabel" name="label_7">
+            <property name="text">
+             <string>Move Name Offset:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="1">
+           <widget class="HexSpin" name="spin_move_name_offset"/>
+          </item>
+          <item row="6" column="2">
+           <widget class="QPushButton" name="button_move_name_offset">
+            <property name="text">
+             <string>Move Name Offset</string>
             </property>
            </widget>
           </item>
@@ -269,7 +303,7 @@
           </widget>
           <widget class="QTabWidget" name="tabWidget_2">
            <property name="currentIndex">
-            <number>4</number>
+            <number>0</number>
            </property>
            <widget class="QWidget" name="tab_3">
             <attribute name="title">
@@ -286,8 +320,8 @@
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>63</width>
-                  <height>38</height>
+                  <width>543</width>
+                  <height>437</height>
                  </rect>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_6">
@@ -345,8 +379,8 @@
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>63</width>
-                  <height>38</height>
+                  <width>543</width>
+                  <height>437</height>
                  </rect>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_9">
@@ -404,8 +438,8 @@
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>63</width>
-                  <height>38</height>
+                  <width>543</width>
+                  <height>437</height>
                  </rect>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_4">

@@ -15,6 +15,10 @@ public:
     int find_name_offset_FR_LG(GBARom *rom);
     int find_pokemon_name_offset(GBARom *rom);
     int find_encounter_offset(GBARom *rom);
+    int find_trainer_offset(GBARom *rom);
+    int find_move_name_offset(GBARom *rom);
+
+
 signals:
 
 };
