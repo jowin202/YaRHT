@@ -18,10 +18,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     GUI/connectionlabel.cpp \
     GUI/encounterwidget.cpp \
+    GUI/pokemonwidget.cpp \
     GUI/textbrowserdialog.cpp \
     ROM/gbaencounter.cpp \
     ROM/gbamap.cpp \
     ROM/gbaoffsetfinder.cpp \
+    ROM/gbapalette.cpp \
+    ROM/gbapokemon.cpp \
     ROM/gbarom.cpp \
     GUI/hexspin.cpp \
     ROM/gbatileset.cpp \
@@ -32,10 +35,13 @@ SOURCES += \
 HEADERS += \
     GUI/connectionlabel.h \
     GUI/encounterwidget.h \
+    GUI/pokemonwidget.h \
     GUI/textbrowserdialog.h \
     ROM/gbaencounter.h \
     ROM/gbamap.h \
     ROM/gbaoffsetfinder.h \
+    ROM/gbapalette.h \
+    ROM/gbapokemon.h \
     ROM/gbarom.h \
     GUI/hexspin.h \
     ROM/gbatileset.h \
@@ -44,6 +50,7 @@ HEADERS += \
 
 FORMS += \
     GUI/encounterwidget.ui \
+    GUI/pokemonwidget.ui \
     GUI/textbrowserdialog.ui \
     mainwindow.ui
 

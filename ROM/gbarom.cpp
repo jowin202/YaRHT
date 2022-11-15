@@ -379,7 +379,7 @@ void GBARom::find_move_names(int offset)
         QString trimmed_name = name.trimmed();
 
         this->move_names << trimmed_name;
-        qDebug() << (i+1) << trimmed_name  << QString::number(start_offset,16);
+        //qDebug() << (i+1) << trimmed_name  << QString::number(start_offset,16);
         start_offset += expected_length+1;
     }
 }

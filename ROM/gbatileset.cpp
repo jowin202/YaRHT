@@ -1,11 +1,12 @@
 #include "gbatileset.h"
 #include "gbarom.h"
+#include "gbapalette.h"
 
 GBATileset::GBATileset(int offset1, int offset2, GBARom *rom)
 {
     this->compressed1 = rom->read8bit(offset1) > 0;
     this->image_offset1 = rom->read_offset(offset1+4);
-    this->pallette_offset1 = rom->read_offset(offset1+8);
+    this->palette_offset1 = rom->read_offset(offset1+8);
     this->blocks_offset1 = rom->read_offset(offset1+12);
     this->unknown_offset1 = rom->read_offset(offset1+16);
     this->block_metadata_offset1 = rom->read_offset(offset1+20);
@@ -13,15 +14,15 @@ GBATileset::GBATileset(int offset1, int offset2, GBARom *rom)
 
     this->compressed2 = rom->read8bit(offset2) > 0;
     this->image_offset2 = rom->read_offset(offset2+4);
-    this->pallette_offset2 = rom->read_offset(offset2+8);
+    this->palette_offset2 = rom->read_offset(offset2+8);
     this->blocks_offset2 = rom->read_offset(offset2+12);
     this->unknown_offset2 = rom->read_offset(offset2+16);
     this->block_metadata_offset2 = rom->read_offset(offset2+20);
 
     rom->register_offset(this->image_offset1);
     rom->register_offset(this->image_offset2);
-    rom->register_offset(this->pallette_offset1);
-    rom->register_offset(this->pallette_offset2);
+    rom->register_offset(this->palette_offset1);
+    rom->register_offset(this->palette_offset2);
     rom->register_offset(this->blocks_offset1);
     rom->register_offset(this->blocks_offset2);
     rom->register_offset(this->unknown_offset1);
@@ -29,42 +30,22 @@ GBATileset::GBATileset(int offset1, int offset2, GBARom *rom)
     rom->register_offset(this->block_metadata_offset1);
     rom->register_offset(this->block_metadata_offset2);
 
-    for (int i = 0; i < 256; i++)
-    {
-        if (i%16 == 0)
-        {
-            //first color is always transparent
-            colors1.append(QColor(0,0,0,0));
-            colors2.append(QColor(0,0,0,0));
-            continue;
-        }
-        int v = rom->read16bit(this->pallette_offset1 + 2*i);
-        colors1.append(QColor(this->get_red(v),
-                              this->get_green(v),
-                              this->get_blue(v)));
 
-        v = rom->read16bit(this->pallette_offset2 + 2*i);
-        colors2.append(QColor(this->get_red(v),
-                              this->get_green(v),
-                              this->get_blue(v)));
+    for (int i = 0; i < 7; i++)
+    {
+        GBAPalette *pal1 = new GBAPalette(rom, palette_offset1 + 32*i);
+        GBAPalette *pal2 = new GBAPalette(rom, palette_offset2 + 32*i);
+        palettes1.append(pal1);
+        palettes2.append(pal2);
+    }
+    //palette2 has custom tiles in second half
+    for (int i = 7; i < 16; i++)
+    {
+        GBAPalette *pal2 = new GBAPalette(rom, palette_offset2 + 32*i);
+        palettes1.append(pal2);
+        palettes2.append(pal2);
     }
 
-
-
-    for (int i = 0; i < 16; i++)
-    {
-        if (colors1.at(16*i+1) == colors1.at(16*i+2)
-                && colors1.at(16*i+2) == colors1.at(16*i+3)
-                && colors1.at(16*i+3) == colors1.at(16*i+4)
-                && colors1.at(16*i+4) == colors1.at(16*i+5))
-        {
-            for (int c = 0; c < 16; c++)
-            {
-                colors1.removeAt(16*i + c);
-                colors1.insert(16*i + c, colors2.at(16*i + c));
-            }
-        }
-    }
 
 
     if (compressed1)
@@ -109,13 +90,13 @@ void GBATileset::generate_block_image()
                         QColor c2;
                         if (y < rows)
                         {
-                            c1 = colors1.at(16*pal + ((block[4*yb+xb] >> 4) & 0xF));
-                            c2 = colors1.at(16*pal + (block[4*yb+xb] & 0xF));
+                            c1 = palettes1.at(pal)->colors.at(((block[4*yb+xb] >> 4) & 0xF));
+                            c2 = palettes1.at(pal)->colors.at( (block[4*yb+xb] & 0xF));
                         }
                         else
                         {
-                            c1 = colors2.at(16*pal + ((block[4*yb+xb] >> 4) & 0xF));
-                            c2 = colors2.at(16*pal + (block[4*yb+xb] & 0xF));
+                            c1 = palettes2.at(pal)->colors.at(((block[4*yb+xb] >> 4) & 0xF));
+                            c2 = palettes2.at(pal)->colors.at( (block[4*yb+xb] & 0xF));
                         }
 
                         img.setPixelColor(8*x + 2*xb+1,8*y + yb, c1);
@@ -133,7 +114,7 @@ void GBATileset::generate_block_image()
 
 QImage GBATileset::get_block_by_num(int n)
 {
-    int pallette = n>>12;
+    int palette = n>>12;
     bool xflip = (n & 0x400) > 0;
     bool yflip = (n & 0x800) > 0;
 
@@ -142,7 +123,7 @@ QImage GBATileset::get_block_by_num(int n)
     int x = n % 16;
     int y = n / 16;
 
-    QImage block = this->block_images[pallette].copy(8*x,8*y,8,8);
+    QImage block = this->block_images[palette].copy(8*x,8*y,8,8);
 
     block = block.mirrored(xflip,yflip);
 
@@ -200,4 +181,34 @@ void GBATileset::generate_tileset_image(GBARom *rom)
 QImage GBATileset::get_tile_by_num(int n)
 {
     return this->tileset_image.copy((n%8)*16,(n/8)*16,16,16);
+}
+
+QImage GBATileset::get_palettes_as_image()
+{
+    QImage img(1824, 1424, QImage::Format_ARGB32);
+    QPainter painter(&img);
+    painter.fillRect(0,0,img.width(),img.height(), Qt::white);
+
+    for (int pal = 0; pal < 16; pal++)
+    {
+        for (int i = 0; i < 8; i++)
+        {
+            painter.fillRect(i*32,64*pal + 00, 32,32, palettes1.at(pal)->colors.at(i));
+            painter.fillRect(i*32,64*pal + 32, 32,32, palettes1.at(pal)->colors.at(i+8));
+
+
+            painter.fillRect(450+ i*32,64*pal + 00, 32,32, palettes2.at(pal)->colors.at(i));
+            painter.fillRect(450+ i*32,64*pal + 32, 32,32, palettes2.at(pal)->colors.at(i+8));
+        }
+    }
+
+    for (int i = 0; i < 5; i++)
+    {
+        painter.drawImage(800+i*150,0,this->block_images.at(i));
+        painter.drawImage(800+i*150,400,this->block_images.at(i+5));
+        painter.drawImage(800+i*150,800,this->block_images.at(i+10));
+    }
+
+    painter.end();
+    return img;
 }

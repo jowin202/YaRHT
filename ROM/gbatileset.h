@@ -7,6 +7,7 @@
 #include <QRect>
 #include <QDebug>
 
+class GBAPalette;
 class GBARom;
 class GBATileset
 {
@@ -15,20 +16,22 @@ public:
 
     bool compressed1;
     int image_offset1;
-    int pallette_offset1;
+    int palette_offset1;
     int blocks_offset1;
     int unknown_offset1;
     int block_metadata_offset1;
 
     bool compressed2;
     int image_offset2;
-    int pallette_offset2;
+    int palette_offset2;
     int blocks_offset2;
     int unknown_offset2;
     int block_metadata_offset2;
 
-    QList<QColor> colors1;
-    QList<QColor> colors2;
+
+    QList<GBAPalette*> palettes1;
+    QList<GBAPalette*> palettes2;
+
 
     QByteArray image_data1;
     QByteArray image_data2;
@@ -46,16 +49,7 @@ public:
     QImage get_tile_by_num(int n);
 
 
-
-
-    int bit_convert(int v)
-    { return 255*v/31; }
-    int get_red(int v)
-    { return bit_convert((v >> 0) & 0x1F); }
-    int get_green(int v)
-    { return bit_convert((v >> 5) & 0x1F); }
-    int get_blue(int v)
-    { return bit_convert((v >> 10) & 0x1F); }
+    QImage get_palettes_as_image();
 
 };
 

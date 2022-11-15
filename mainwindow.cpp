@@ -4,6 +4,7 @@
 
 #include "ROM/gbamap.h"
 #include "ROM/gbatileset.h"
+#include "ROM/gbapalette.h"
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -138,8 +139,6 @@ void MainWindow::on_button_import_clicked()
                         QString::number(rom.maps.at(3).at(3)->signpost_events.at(i).amount,16);
     }
     */
-
-
 }
 
 void MainWindow::on_map_tree_itemActivated(QTreeWidgetItem *item, int column)
@@ -186,6 +185,9 @@ void MainWindow::on_map_tree_itemActivated(QTreeWidgetItem *item, int column)
 
     //Encounters Tab
     this->ui->encounter_widget->display_encounters(bank ,m, &rom);
+
+    //Palettes at Tileset Tab
+    this->ui->palette_label->setPixmap(QPixmap::fromImage(map->tileset->get_palettes_as_image()));
 
 }
 
