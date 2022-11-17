@@ -7,12 +7,9 @@ class GBARom;
 class GBAPalette
 {
 public:
-    GBAPalette(GBARom *rom, int offset);
+    GBAPalette(GBARom *rom, int offset, bool compressed = false);
 
     QList<QColor> colors;
-
-
-
 
 
     int bit_convert(int v)

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1037</width>
-    <height>669</height>
+    <height>797</height>
    </rect>
   </property>
   <property name="acceptDrops">
@@ -36,10 +36,54 @@
        <layout class="QGridLayout" name="gridLayout_11">
         <item row="0" column="0">
          <layout class="QGridLayout" name="gridLayout_3">
+          <item row="0" column="1" colspan="4">
+           <widget class="QLineEdit" name="line_path">
+            <property name="text">
+             <string>/home/johannes/ROM_Hacks/firered.gba</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>Map Names Offset:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="1">
+           <widget class="HexSpin" name="spin_pokemon_shiny_palette_offset"/>
+          </item>
+          <item row="12" column="1">
+           <widget class="HexSpin" name="spin_pokemon_base_stats_offset"/>
+          </item>
+          <item row="5" column="1">
+           <widget class="HexSpin" name="spin_pokemon_front_sprite_offset"/>
+          </item>
           <item row="0" column="0">
            <widget class="QLabel" name="label_2">
             <property name="text">
              <string>ROM Path:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="0">
+           <widget class="QLabel" name="label_11">
+            <property name="text">
+             <string>Pokemon Shiny Palette Offset:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="11" column="2">
+           <widget class="QPushButton" name="button_find_footprint_offset">
+            <property name="text">
+             <string>Find Footprint Offset</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="HexSpin" name="spin_map_bank_header_offset">
+            <property name="maximum">
+             <number>16777216</number>
             </property>
            </widget>
           </item>
@@ -50,12 +94,59 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="2">
-           <widget class="QPushButton" name="button_find_encounter_offset">
+          <item row="14" column="2">
+           <widget class="QPushButton" name="button_trainer_offset">
             <property name="text">
-             <string>Find Encounter Offset</string>
+             <string>Find Trainer Offset FR/LG</string>
             </property>
            </widget>
+          </item>
+          <item row="8" column="2">
+           <widget class="QPushButton" name="button_find_shiny_palette">
+            <property name="text">
+             <string>Find Shiny Palette Offset</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="1">
+           <widget class="HexSpin" name="spin_pokemon_palette_offset"/>
+          </item>
+          <item row="13" column="0">
+           <widget class="QLabel" name="label_15">
+            <property name="text">
+             <string>Pokemon Evolutions</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="1">
+           <widget class="HexSpin" name="spin_pokemon_back_sprite_offset"/>
+          </item>
+          <item row="7" column="2">
+           <widget class="QPushButton" name="button_find_palette">
+            <property name="text">
+             <string>Find Palette Offset</string>
+            </property>
+           </widget>
+          </item>
+          <item row="15" column="2">
+           <widget class="QPushButton" name="button_move_name_offset">
+            <property name="text">
+             <string>Move Name Offset</string>
+            </property>
+           </widget>
+          </item>
+          <item row="16" column="0">
+           <spacer name="verticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
           </item>
           <item row="1" column="4">
            <spacer name="horizontalSpacer">
@@ -70,10 +161,145 @@
             </property>
            </spacer>
           </item>
+          <item row="12" column="0">
+           <widget class="QLabel" name="label_14">
+            <property name="text">
+             <string>Pokemon Base Stats:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="11" column="0">
+           <widget class="QLabel" name="label_13">
+            <property name="text">
+             <string>Pokemon Footprint:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="11" column="1">
+           <widget class="HexSpin" name="spin_pokemon_footprint_offset"/>
+          </item>
+          <item row="13" column="1">
+           <widget class="HexSpin" name="spin_pokemon_evolution_offset"/>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>Map Bank Header Offset:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="2">
+           <widget class="QPushButton" name="button_find_front_sprite_offset">
+            <property name="text">
+             <string>Find Front Sprite Offset</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="2">
+           <widget class="QPushButton" name="button_find_encounter_offset">
+            <property name="text">
+             <string>Find Encounter Offset</string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="0">
+           <widget class="QLabel" name="label_12">
+            <property name="text">
+             <string>Pokemon Icons Offset:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="5">
+           <widget class="QPushButton" name="button_browse">
+            <property name="text">
+             <string>Browse</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="2">
+           <widget class="QPushButton" name="button_find_back_sprite_offset">
+            <property name="text">
+             <string>Find Back Sprite Offset</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_4">
+            <property name="text">
+             <string>Pokemon Name Offset:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="14" column="0">
+           <widget class="QLabel" name="label_6">
+            <property name="text">
+             <string>Trainer Offset:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="2">
+           <widget class="QPushButton" name="button_find_pokemon_name_offset">
+            <property name="text">
+             <string>Find Pkmn Name Offset</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="3">
+           <widget class="QPushButton" name="button_find_map_names">
+            <property name="text">
+             <string>Find Map Names</string>
+            </property>
+           </widget>
+          </item>
+          <item row="15" column="0">
+           <widget class="QLabel" name="label_7">
+            <property name="text">
+             <string>Move Name Offset:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0">
+           <widget class="QLabel" name="label_9">
+            <property name="text">
+             <string>Pokemon Back Sprite Offset:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="12" column="2">
+           <widget class="QPushButton" name="button_find_base_stats_offset">
+            <property name="text">
+             <string>Find Base Stats Offset</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_5">
+            <property name="text">
+             <string>Encounter Offset:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="13" column="2">
+           <widget class="QPushButton" name="button_find_evolution">
+            <property name="text">
+             <string>Find Evolution Offset</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QPushButton" name="button_name_FR_LG">
+            <property name="text">
+             <string>Find Map Name FR/LG</string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="1">
+           <widget class="HexSpin" name="spin_pokemon_icons_offset"/>
+          </item>
           <item row="4" column="1">
            <widget class="HexSpin" name="spin_pokemon_name_offset"/>
           </item>
-          <item row="8" column="0" colspan="6">
+          <item row="17" column="0" colspan="6">
            <layout class="QHBoxLayout" name="horizontalLayout">
             <item>
              <spacer name="horizontalSpacer_2">
@@ -89,6 +315,13 @@
              </spacer>
             </item>
             <item>
+             <widget class="QPushButton" name="button_find_all_offsets">
+              <property name="text">
+               <string>Find All Offsets Automatically</string>
+              </property>
+             </widget>
+            </item>
+            <item>
              <widget class="QPushButton" name="button_import">
               <property name="text">
                <string>Import</string>
@@ -97,126 +330,53 @@
             </item>
            </layout>
           </item>
-          <item row="3" column="1">
-           <widget class="HexSpin" name="spin_encounter_offset"/>
-          </item>
-          <item row="0" column="5">
-           <widget class="QPushButton" name="button_browse">
+          <item row="9" column="2">
+           <widget class="QPushButton" name="button_find_icon_offset">
             <property name="text">
-             <string>Browse</string>
+             <string>Find Icons Offset</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="2">
-           <widget class="QPushButton" name="button_name_FR_LG">
-            <property name="text">
-             <string>Find Name FR/LG</string>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="0">
-           <spacer name="verticalSpacer">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label">
-            <property name="text">
-             <string>Map Bank Header Offset:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="label_5">
-            <property name="text">
-             <string>Encounter Offset:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="2">
-           <widget class="QPushButton" name="button_find_pokemon_name_offset">
-            <property name="text">
-             <string>Find Pkmn Name Offset</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="0">
-           <widget class="QLabel" name="label_6">
-            <property name="text">
-             <string>Trainer Offset:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0">
-           <widget class="QLabel" name="label_4">
-            <property name="text">
-             <string>Pokemon Name Offset:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_3">
-            <property name="text">
-             <string>Map Names Offset:</string>
-            </property>
-           </widget>
+          <item row="14" column="1">
+           <widget class="HexSpin" name="spin_trainer_offset"/>
           </item>
           <item row="2" column="1">
            <widget class="HexSpin" name="spin_map_names_offset"/>
           </item>
-          <item row="1" column="1">
-           <widget class="HexSpin" name="spin_map_bank_header_offset">
-            <property name="maximum">
-             <number>16777216</number>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="3">
-           <widget class="QPushButton" name="button_find_map_names">
-            <property name="text">
-             <string>Find Map Names</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="1">
-           <widget class="HexSpin" name="spin_trainer_offset"/>
-          </item>
-          <item row="5" column="2">
-           <widget class="QPushButton" name="button_trainer_offset">
-            <property name="text">
-             <string>Find Trainer Offset FR/LG</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1" colspan="4">
-           <widget class="QLineEdit" name="line_path">
-            <property name="text">
-             <string>/home/johannes/ROM_Hacks/firered.gba</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="0">
-           <widget class="QLabel" name="label_7">
-            <property name="text">
-             <string>Move Name Offset:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="1">
+          <item row="15" column="1">
            <widget class="HexSpin" name="spin_move_name_offset"/>
           </item>
-          <item row="6" column="2">
-           <widget class="QPushButton" name="button_move_name_offset">
+          <item row="5" column="0">
+           <widget class="QLabel" name="label_8">
             <property name="text">
-             <string>Move Name Offset</string>
+             <string>Pokemon Front Sprite Offset:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="HexSpin" name="spin_encounter_offset"/>
+          </item>
+          <item row="7" column="0">
+           <widget class="QLabel" name="label_10">
+            <property name="text">
+             <string>Pokemon Palette Offset:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="0">
+           <widget class="QLabel" name="label_16">
+            <property name="text">
+             <string>Pokemon Icons Palettes Offset:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="1">
+           <widget class="HexSpin" name="spin_pokemon_icon_palette_offset"/>
+          </item>
+          <item row="10" column="2">
+           <widget class="QPushButton" name="button_find_icon_palette_offset">
+            <property name="text">
+             <string>Find Icon Palette Offset</string>
             </property>
            </widget>
           </item>
@@ -321,7 +481,7 @@
                   <x>0</x>
                   <y>0</y>
                   <width>780</width>
-                  <height>506</height>
+                  <height>634</height>
                  </rect>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_6">

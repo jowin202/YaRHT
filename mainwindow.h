@@ -53,6 +53,27 @@ private slots:
 
     void on_button_move_name_offset_clicked();
 
+    void on_button_find_front_sprite_offset_clicked();
+
+    void on_button_find_back_sprite_offset_clicked();
+
+    void on_button_find_palette_clicked();
+
+    void on_button_find_shiny_palette_clicked();
+
+    void on_button_find_icon_offset_clicked();
+
+    void on_button_find_icon_palette_offset_clicked();
+
+    void on_button_find_footprint_offset_clicked();
+
+    void on_button_find_base_stats_offset_clicked();
+
+    void on_button_find_evolution_clicked();
+
+    void on_button_find_all_offsets_clicked();
+
+
 private:
     Ui::MainWindow *ui;
     GBARom rom;

@@ -21,6 +21,7 @@ SOURCES += \
     GUI/pokemonwidget.cpp \
     GUI/textbrowserdialog.cpp \
     ROM/gbaencounter.cpp \
+    ROM/gbaimage.cpp \
     ROM/gbamap.cpp \
     ROM/gbaoffsetfinder.cpp \
     ROM/gbapalette.cpp \
@@ -38,6 +39,7 @@ HEADERS += \
     GUI/pokemonwidget.h \
     GUI/textbrowserdialog.h \
     ROM/gbaencounter.h \
+    ROM/gbaimage.h \
     ROM/gbamap.h \
     ROM/gbaoffsetfinder.h \
     ROM/gbapalette.h \

@@ -18,6 +18,15 @@ public:
     int find_trainer_offset(GBARom *rom);
     int find_move_name_offset(GBARom *rom);
 
+    int find_front_sprite_offset(GBARom * rom);
+    int find_back_sprite_offset(GBARom * rom);
+    int find_pokemon_palette_offset(GBARom *rom);
+    int find_pokemon_shiny_palette_offset(GBARom *rom);
+    int find_pokemon_icon_offset(GBARom *rom);
+    int find_pokemon_icon_palette_offset(GBARom *rom);
+    int find_pokemon_footprint_offset(GBARom *rom);
+    int find_pokemon_base_stat_offset(GBARom *rom);
+    int find_pokemon_evolution_offset(GBARom *rom);
 
 signals:
 

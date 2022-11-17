@@ -2,6 +2,10 @@
 #define POKEMONWIDGET_H
 
 #include <QWidget>
+#include <QListWidgetItem>
+#include <QDebug>
+
+class GBARom;
 
 namespace Ui {
 class PokemonWidget;
@@ -15,8 +19,14 @@ public:
     explicit PokemonWidget(QWidget *parent = nullptr);
     ~PokemonWidget();
 
+    void set_rom(GBARom *rom);
+
+private slots:
+    void on_list_pokemon_itemActivated(QListWidgetItem *item);
+
 private:
     Ui::PokemonWidget *ui;
+    GBARom *rom = 0;
 };
 
 #endif // POKEMONWIDGET_H

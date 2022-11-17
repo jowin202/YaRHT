@@ -6,6 +6,9 @@
 #include "gbamap.h"
 #include "gbatileset.h"
 #include "gbaencounter.h"
+#include "gbapokemon.h"
+#include "gbaimage.h"
+#include "gbapalette.h"
 
 GBARom::GBARom()
 {
@@ -318,6 +321,39 @@ void GBARom::find_pokemon_names(int offset)
         start_offset += expected_length+1;
     }
 
+}
+
+void GBARom::find_pokemon_base_stats(int offset)
+{
+    for (int i = 0; i < 412; i++)
+    {
+        GBAPokemon *pokemon = new GBAPokemon(this);
+        pokemon->name_index = i;
+        offset += pokemon->set_base_stats(offset); //shift offset to next pokemon
+        pokemons.append(pokemon);
+
+        //qDebug() << i << pokemon->get_name() <<  pokemon->base_hp << pokemon->base_atk << pokemon->base_def << pokemon->base_speed << pokemon->base_sp_atk << pokemon->base_sp_def  << pokemon->catch_rate << QString::number(offset,16);
+    }
+}
+
+void GBARom::find_pokemon_sprites(int front_offset, int back_offset, int icon_offset, int footprint_offset, int pal_offset, int pal_shiny_offset, int pal_icon)
+{
+    for (int i = 0; i < pokemons.length(); i++)
+    {
+        GBAPalette pal_normal(this, this->read_offset(pal_offset), true);
+        GBAPalette pal_shiny(this, this->read_offset(pal_shiny_offset), true);
+
+
+        this->pokemons.at(i)->front_sprite = GBAImage(this, &pal_normal, this->read_offset(front_offset)).toImage(64,64);
+        this->pokemons.at(i)->back_sprite = GBAImage(this, &pal_normal, this->read_offset(back_offset)).toImage(64,64);
+        this->pokemons.at(i)->front_sprite_shiny = GBAImage(this, &pal_shiny, this->read_offset(front_offset)).toImage(64,64);
+        this->pokemons.at(i)->back_sprite_shiny = GBAImage(this, &pal_shiny, this->read_offset(back_offset)).toImage(64,64);
+
+        front_offset += 8;
+        back_offset += 8;
+        pal_offset += 8;
+        pal_shiny_offset += 8;
+    }
 }
 
 void GBARom::find_trainers(int offset)

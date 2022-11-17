@@ -69,6 +69,33 @@ void MainWindow::on_button_import_clicked()
         this->rom.find_pokemon_names(this->ui->spin_pokemon_name_offset->value());
     }
 
+    //pokemon stats
+    if (this->ui->spin_pokemon_base_stats_offset->value() != 0)
+    {
+        this->rom.find_pokemon_base_stats(this->ui->spin_pokemon_base_stats_offset->value());
+    }
+
+    //pokemon sprites
+    if (this->ui->spin_pokemon_palette_offset->value() != 0 &&
+            this->ui->spin_pokemon_shiny_palette_offset->value() != 0 &&
+            this->ui->spin_pokemon_front_sprite_offset->value() != 0 &&
+            this->ui->spin_pokemon_back_sprite_offset->value() != 0 //&&
+            //this->ui->spin_pokemon_icons_offset->value() != 0 &&
+            //this->ui->spin_pokemon_icon_palette_offset->value() != 0
+            )
+    {
+
+        this->rom.find_pokemon_sprites(this->ui->spin_pokemon_front_sprite_offset->value(),
+                                       this->ui->spin_pokemon_back_sprite_offset->value(),
+                                       this->ui->spin_pokemon_icons_offset->value(),
+                                       this->ui->spin_pokemon_footprint_offset->value(),
+                                       this->ui->spin_pokemon_palette_offset->value(),
+                                       this->ui->spin_pokemon_shiny_palette_offset->value(),
+                                       this->ui->spin_pokemon_icon_palette_offset->value());
+    }
+    this->ui->pokemon_widget->set_rom(&this->rom);
+
+
     //move names
     if (this->ui->spin_move_name_offset->value() != 0)
     {
@@ -189,6 +216,7 @@ void MainWindow::on_map_tree_itemActivated(QTreeWidgetItem *item, int column)
     //Palettes at Tileset Tab
     this->ui->palette_label->setPixmap(QPixmap::fromImage(map->tileset->get_palettes_as_image()));
 
+
 }
 
 void MainWindow::on_button_find_map_names_clicked()
@@ -238,3 +266,77 @@ void MainWindow::on_button_move_name_offset_clicked()
     rom.set_path(this->ui->line_path->text());
     this->ui->spin_move_name_offset->setValue(offset_finder.find_move_name_offset(&this->rom));
 }
+
+void MainWindow::on_button_find_front_sprite_offset_clicked()
+{
+    rom.set_path(this->ui->line_path->text());
+    this->ui->spin_pokemon_front_sprite_offset->setValue(offset_finder.find_front_sprite_offset(&this->rom));
+}
+
+void MainWindow::on_button_find_back_sprite_offset_clicked()
+{
+    rom.set_path(this->ui->line_path->text());
+    this->ui->spin_pokemon_back_sprite_offset->setValue(offset_finder.find_back_sprite_offset(&this->rom));
+}
+
+void MainWindow::on_button_find_palette_clicked()
+{
+    rom.set_path(this->ui->line_path->text());
+    this->ui->spin_pokemon_palette_offset->setValue(offset_finder.find_pokemon_palette_offset(&this->rom));
+}
+
+void MainWindow::on_button_find_shiny_palette_clicked()
+{
+    rom.set_path(this->ui->line_path->text());
+    this->ui->spin_pokemon_shiny_palette_offset->setValue(offset_finder.find_pokemon_shiny_palette_offset(&this->rom));
+}
+
+void MainWindow::on_button_find_icon_offset_clicked()
+{
+    rom.set_path(this->ui->line_path->text());
+    this->ui->spin_pokemon_icons_offset->setValue(offset_finder.find_pokemon_icon_offset(&this->rom));
+}
+
+
+void MainWindow::on_button_find_icon_palette_offset_clicked()
+{
+
+}
+
+void MainWindow::on_button_find_footprint_offset_clicked()
+{
+    rom.set_path(this->ui->line_path->text());
+    this->ui->spin_pokemon_footprint_offset->setValue(offset_finder.find_pokemon_footprint_offset(&this->rom));
+}
+
+void MainWindow::on_button_find_base_stats_offset_clicked()
+{
+    rom.set_path(this->ui->line_path->text());
+    this->ui->spin_pokemon_base_stats_offset->setValue(offset_finder.find_pokemon_base_stat_offset(&this->rom));
+}
+
+void MainWindow::on_button_find_evolution_clicked()
+{
+    rom.set_path(this->ui->line_path->text());
+    this->ui->spin_pokemon_evolution_offset->setValue(offset_finder.find_pokemon_evolution_offset(&this->rom));
+}
+
+
+
+void MainWindow::on_button_find_all_offsets_clicked()
+{
+    this->on_button_find_bank_offsets_clicked();
+    this->on_button_name_FR_LG_clicked();
+    this->on_button_find_encounter_offset_clicked();
+    this->on_button_find_pokemon_name_offset_clicked();
+    this->on_button_find_front_sprite_offset_clicked();
+    this->on_button_find_back_sprite_offset_clicked();
+    this->on_button_find_palette_clicked();
+    this->on_button_find_shiny_palette_clicked();
+    this->on_button_find_base_stats_offset_clicked();
+    this->on_button_find_evolution_clicked();
+    this->on_button_trainer_offset_clicked();
+    this->on_button_move_name_offset_clicked();
+    this->on_button_find_footprint_offset_clicked();
+}
+

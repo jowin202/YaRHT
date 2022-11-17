@@ -34,9 +34,9 @@ GBATileset::GBATileset(int offset1, int offset2, GBARom *rom)
     for (int i = 0; i < 7; i++)
     {
         GBAPalette *pal1 = new GBAPalette(rom, palette_offset1 + 32*i);
-        GBAPalette *pal2 = new GBAPalette(rom, palette_offset2 + 32*i);
+        //GBAPalette *pal2 = new GBAPalette(rom, palette_offset2 + 32*i);
         palettes1.append(pal1);
-        palettes2.append(pal2);
+        palettes2.append(pal1);
     }
     //palette2 has custom tiles in second half
     for (int i = 7; i < 16; i++)
@@ -53,10 +53,12 @@ GBATileset::GBATileset(int offset1, int offset2, GBARom *rom)
     else
         this->image_data1 = rom->rom_data.mid(this->image_offset1, rom->bytes_to_next_offset(this->image_offset1));
 
+
     if (compressed2)
         this->image_data2 = rom->decompress(this->image_offset2);
     else
         this->image_data2 = rom->rom_data.mid(this->image_offset2, rom->bytes_to_next_offset(this->image_offset2));
+
 
     this->generate_block_image();
     this->generate_tileset_image(rom);

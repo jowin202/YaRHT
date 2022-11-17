@@ -8,6 +8,7 @@ class GBATileset;
 class GBAMap;
 class GBAEncounter;
 class GBATrainer;
+class GBAPokemon;
 
 class GBARom
 {
@@ -54,7 +55,10 @@ public:
 
     //Pokemon Data
     void find_pokemon_names(int offset);
+    void find_pokemon_base_stats(int offset);
+    void find_pokemon_sprites(int front_offset, int back_offset, int icon_offset, int footprint_offset, int pal_offset, int pal_shiny_offset, int pal_icon);
     QStringList pokemon_names;
+    QList<GBAPokemon*> pokemons;
 
     //Trainers
     void find_trainers(int offset);

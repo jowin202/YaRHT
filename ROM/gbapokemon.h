@@ -1,12 +1,19 @@
 #ifndef GBAPOKEMON_H
 #define GBAPOKEMON_H
 
+#include <QString>
+#include <QImage>
+
 class GBARom;
 
 class GBAPokemon
 {
 public:
     GBAPokemon(GBARom *rom);
+
+    int set_base_stats(int offset);
+
+    QString get_name();
 
     int front_sprite_offset;
     int back_sprite_offset;
@@ -16,21 +23,24 @@ public:
 
 
 
+    int name_index; //set in GBARom when created
+
 
 
     //stats
-    int hp;
-    int atk;
-    int def;
-    int speed;
+    int base_hp;
+    int base_atk;
+    int base_def;
+    int base_speed;
     int sp_atk;
     int sp_def;
-    int catch_rate;
 
     int type1; //TODO: enum
     int type2;
 
-    int exp;
+    int catch_rate;
+
+    int yield_exp;
 
     int ev_yield_hp;
     int ev_yield_atk;
@@ -57,6 +67,15 @@ public:
     int body_color;
     int noflip; //turn left,right
 
+
+    //Sprites
+    QImage front_sprite;
+    QImage back_sprite;
+    QImage front_sprite_shiny;
+    QImage back_sprite_shiny;
+
+
+    GBARom *rom = 0;
 };
 
 #endif // GBAPOKEMON_H
