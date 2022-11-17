@@ -313,12 +313,9 @@ void GBARom::find_pokemon_names(int offset)
     for (int i = 0; i < 412; i++)
     {
         int expected_length;
-        QString name = this->readText_until_FF(start_offset, &expected_length);
-        QString trimmed_name = name.trimmed();
+        QString name = this->readText_until_FF(start_offset + 11*i, &expected_length);
 
-        this->pokemon_names << trimmed_name;
-        //qDebug() << (i+1) << trimmed_name ;
-        start_offset += expected_length+1;
+        this->pokemon_names << name.trimmed();
     }
 
 }
@@ -329,15 +326,20 @@ void GBARom::find_pokemon_base_stats(int offset)
     {
         GBAPokemon *pokemon = new GBAPokemon(this);
         pokemon->name_index = i;
-        offset += pokemon->set_base_stats(offset); //shift offset to next pokemon
+        int shift_offset = pokemon->set_base_stats(offset); //shift offset to next pokemon
         pokemons.append(pokemon);
 
-        //qDebug() << i << pokemon->get_name() <<  pokemon->base_hp << pokemon->base_atk << pokemon->base_def << pokemon->base_speed << pokemon->base_sp_atk << pokemon->base_sp_def  << pokemon->catch_rate << QString::number(offset,16);
+        //qDebug() << i << pokemon->get_name() <<  pokemon->base_hp << pokemon->base_atk << pokemon->base_def << pokemon->sp_atk << pokemon->sp_def  << pokemon->base_speed << pokemon->catch_rate << QString::number(offset,16);
+
+        offset += shift_offset;
     }
 }
 
 void GBARom::find_pokemon_sprites(int front_offset, int back_offset, int icon_offset, int footprint_offset, int pal_offset, int pal_shiny_offset, int pal_icon)
 {
+    Q_UNUSED(icon_offset);
+    Q_UNUSED(footprint_offset);
+    Q_UNUSED(pal_icon);
     for (int i = 0; i < pokemons.length(); i++)
     {
         GBAPalette pal_normal(this, this->read_offset(pal_offset), true);

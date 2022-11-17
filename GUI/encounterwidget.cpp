@@ -68,7 +68,6 @@ void EncounterWidget::display_encounters(int bank, int map, GBARom *rom)
 
 QString EncounterWidget::pokemon_name(int n)
 {
-    qDebug() << n;
     if (rom == 0) return "";
     if (n > 0 && n <= rom->pokemon_names.length())
         return rom->pokemon_names.at(n-1);
