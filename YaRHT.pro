@@ -20,6 +20,7 @@ SOURCES += \
     GUI/encounterwidget.cpp \
     GUI/pokemonwidget.cpp \
     GUI/textbrowserdialog.cpp \
+    GUI/trainerwidget.cpp \
     ROM/gbaencounter.cpp \
     ROM/gbaimage.cpp \
     ROM/gbamap.cpp \
@@ -38,6 +39,7 @@ HEADERS += \
     GUI/encounterwidget.h \
     GUI/pokemonwidget.h \
     GUI/textbrowserdialog.h \
+    GUI/trainerwidget.h \
     ROM/gbaencounter.h \
     ROM/gbaimage.h \
     ROM/gbamap.h \
@@ -54,6 +56,7 @@ FORMS += \
     GUI/encounterwidget.ui \
     GUI/pokemonwidget.ui \
     GUI/textbrowserdialog.ui \
+    GUI/trainerwidget.ui \
     mainwindow.ui
 
 # Default rules for deployment.

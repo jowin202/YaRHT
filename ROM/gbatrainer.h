@@ -20,6 +20,8 @@ public:
     GBATrainer(GBARom *rom);
     void load_party();
 
+    QString get_full_name();
+
     QString party_as_string(); //for debugging
 
 

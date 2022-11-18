@@ -107,6 +107,12 @@ void MainWindow::on_button_import_clicked()
     {
         rom.find_trainers(this->ui->spin_trainer_offset->value());
     }
+    if (this->ui->spin_trainer_class_names_offset->value() != 0)
+    {
+        rom.find_trainer_class_names(this->ui->spin_trainer_class_names_offset->value());
+    }
+    this->ui->trainer_widget->set_rom(&this->rom);
+
 
 
     QTreeWidgetItem *banks = new QTreeWidgetItem(QStringList("Banks"));
@@ -338,5 +344,19 @@ void MainWindow::on_button_find_all_offsets_clicked()
     this->on_button_trainer_offset_clicked();
     this->on_button_move_name_offset_clicked();
     this->on_button_find_footprint_offset_clicked();
+    this->on_button_find_trainer_offset_name_clicked();
+    this->on_button_find_trainer_pic_offset_clicked();
 }
 
+
+
+void MainWindow::on_button_find_trainer_offset_name_clicked()
+{
+    rom.set_path(this->ui->line_path->text());
+    this->ui->spin_trainer_class_names_offset->setValue(offset_finder.find_trainer_class_name_offset(&this->rom));
+}
+
+void MainWindow::on_button_find_trainer_pic_offset_clicked()
+{
+    //TODO
+}

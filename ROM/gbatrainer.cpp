@@ -99,6 +99,13 @@ void GBATrainer::load_party()
     }
 }
 
+QString GBATrainer::get_full_name()
+{
+    if (rom->trainerClassNames.length() <= this->trainerClass) return QString();
+    else
+        return rom->trainerClassNames.at(this->trainerClass) + " " + this->name;
+}
+
 QString GBATrainer::party_as_string()
 {
     this->load_party();

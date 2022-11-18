@@ -74,6 +74,11 @@ private slots:
     void on_button_find_all_offsets_clicked();
 
 
+
+    void on_button_find_trainer_offset_name_clicked();
+
+    void on_button_find_trainer_pic_offset_clicked();
+
 private:
     Ui::MainWindow *ui;
     GBARom rom;

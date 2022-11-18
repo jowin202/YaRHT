@@ -13,6 +13,7 @@ GBAImage::GBAImage(GBARom *rom, GBAPalette *palette, int offset)
 
 QImage GBAImage::toImage(int w, int h)
 {
+    //TODO: w,h
     QImage img(w,h, QImage::Format_ARGB32);
 
     int c = 0;

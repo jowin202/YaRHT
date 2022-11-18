@@ -74,6 +74,24 @@ int GBAOffsetFinder::find_trainer_offset(GBARom *rom)
     return rom->read_offset(0x116c4);
 }
 
+int GBAOffsetFinder::find_trainer_class_name_offset(GBARom *rom)
+{
+    for (int i = 0; i < rom->rom_data.length()-16; i++)
+    {
+        if (rom->rom_data.at(i) == 0x0c
+                && rom->rom_data.at(i+1) == 0x18
+                && rom->rom_data.at(i+2) == 0x72
+                && rom->rom_data.at(i+3) == ((char)0xE1))
+        {
+            if (rom->rom_data.at(i+7) == 0x08 && rom->rom_data.at(i+11) == 0x08)
+            {
+                return rom->read_offset(i+8);
+            }
+        }
+    }
+    return -1;
+}
+
 int GBAOffsetFinder::find_move_name_offset(GBARom *rom)
 {
     return rom->read_offset(0x148);

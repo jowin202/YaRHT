@@ -306,7 +306,7 @@ void GBARom::find_encounters(int offset)
 
 void GBARom::find_pokemon_names(int offset)
 {
-    int start_offset = this->find_next_text(offset);
+    int start_offset = offset; //this->find_next_text(offset);
     while (this->read8bit(start_offset) == 0xFF)
         start_offset++;
 
@@ -370,6 +370,7 @@ void GBARom::find_trainers(int offset)
         trainer->encounterMusic = this->read8bit(start_offset++);
         trainer->trainerPic = this->read8bit(start_offset++);
 
+        //Automatically detects end
         if (trainer->partyFlags == 0xAC && trainer->trainerClass == 0xAC && trainer->encounterMusic == 0xAC && trainer->trainerPic == 0xAC)
             break;
 
@@ -400,6 +401,20 @@ void GBARom::find_trainers(int offset)
                  */
     }
 
+}
+
+void GBARom::find_trainer_class_names(int offset)
+{
+    int start_offset = offset;
+
+    for (int i = 0; i < 107; i++)
+    {
+        int expected_length;
+        QString name = this->readText_until_FF(start_offset + 13*i, &expected_length);
+        qDebug() << QString::number(start_offset + 13*i,16) << name;
+
+        this->trainerClassNames << name.trimmed();
+    }
 }
 
 void GBARom::find_move_names(int offset)

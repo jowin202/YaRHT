@@ -62,7 +62,10 @@ public:
 
     //Trainers
     void find_trainers(int offset);
+    void find_trainer_class_names(int offset);
     QList<GBATrainer*> trainers;
+    QStringList trainerClassNames;
+
 
     //move names
     void find_move_names(int offset);
