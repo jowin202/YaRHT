@@ -388,7 +388,7 @@ void GBARom::find_trainers(int offset)
 
         this->trainers.append(trainer);
 
-        /*
+
         qDebug() << i << trainer->partyFlags
                  << trainer->trainerClass
                  << trainer->encounterMusic
@@ -398,7 +398,8 @@ void GBARom::find_trainers(int offset)
                  << QString::number(trainer->party_offset, 16)
                  << "party: " << trainer->party_as_string()
                  ;//<< "next: " << QString::number(start_offset, 16);
-                 */
+
+
     }
 
 }
@@ -411,7 +412,7 @@ void GBARom::find_trainer_class_names(int offset)
     {
         int expected_length;
         QString name = this->readText_until_FF(start_offset + 13*i, &expected_length);
-        qDebug() << QString::number(start_offset + 13*i,16) << name;
+        //qDebug() << QString::number(start_offset + 13*i,16) << name;
 
         this->trainerClassNames << name.trimmed();
     }

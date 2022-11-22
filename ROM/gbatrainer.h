@@ -21,6 +21,7 @@ public:
     void load_party();
 
     QString get_full_name();
+    QString get_class_string();
 
     QString party_as_string(); //for debugging
 

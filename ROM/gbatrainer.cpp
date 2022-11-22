@@ -106,6 +106,13 @@ QString GBATrainer::get_full_name()
         return rom->trainerClassNames.at(this->trainerClass) + " " + this->name;
 }
 
+QString GBATrainer::get_class_string()
+{
+    if (rom->trainerClassNames.length() <= this->trainerClass) return QString();
+    else
+        return rom->trainerClassNames.at(this->trainerClass);
+}
+
 QString GBATrainer::party_as_string()
 {
     this->load_party();
@@ -115,7 +122,7 @@ QString GBATrainer::party_as_string()
     {
         QString pkmn_name;
         if (rom->pokemon_names.length() > party[i].species)
-            pkmn_name = rom->pokemon_names.at(party[i].species-1);
+            pkmn_name = rom->pokemon_names.at(party[i].species);
         str += pkmn_name + QString("(lv: %1, ev: %2)").arg(party[i].level).arg(party[i].EV) + ", ";
     }
     return str;

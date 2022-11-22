@@ -55,7 +55,7 @@ QString GBAPokemon::get_name()
 {
     if (this->rom != 0 && this->rom->pokemon_names.length() >= 0 && this->rom->pokemon_names.length() > this->name_index && name_index > 0)
     {
-        return this->rom->pokemon_names.at(this->name_index-1);
+        return this->rom->pokemon_names.at(this->name_index);
     }
 
     return "";
